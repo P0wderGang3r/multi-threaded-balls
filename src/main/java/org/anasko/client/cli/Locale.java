@@ -22,6 +22,9 @@ public class Locale {
     private final static String genSceneDots = "Enter a number of dots: ";
 
     @Getter
+    private final static String sceneReportHeader = "Scene generation report:";
+
+    @Getter
     private final static String progressReportHeader = "Progress report:";
 
     @Getter

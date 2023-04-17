@@ -1,4 +1,4 @@
-package org.anasko.server.functions.MonteCarloVariants;
+package org.anasko.server.functions;
 
 public class MonteCarloLinear implements Runnable {
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserClientCLI implements IUserClient {
+    //Проверка на соответствие введённой строки числу
     private boolean parseIntCheck(String input) {
         try {
             Integer.parseInt(input);
@@ -17,6 +18,7 @@ public class UserClientCLI implements IUserClient {
         return false;
     }
 
+    //Получение и расшифровка текущего статуса работы сервера
     private boolean getWorkingStatus() {
         ArrayList<String> result = Routes.getWorkingStatus();
         return result.get(0).equals("true");
@@ -34,10 +36,15 @@ public class UserClientCLI implements IUserClient {
     //Получить результаты работы алгоритма
     private void route6() {
         ArrayList<String> result = Routes.getResults();
+        if (result.get(0).equals("true")) {
+            result.remove(0);
 
-        System.out.println(Locale.getProgressReportHeader());
-        for (String line: result) {
-            System.out.println(line);
+            System.out.println(Locale.getProgressReportHeader());
+            for (var line: result) {
+                System.out.println(line);
+            }
+        } else {
+            System.out.println(Locale.getServerIsBusyError());
         }
         System.out.println();
     }
@@ -59,8 +66,16 @@ public class UserClientCLI implements IUserClient {
 
     //Получение содержимого новой сцены
     private void route2() {
-        for (var circle: Routes.getScene()) {
-            System.out.println(circle);
+        ArrayList<String> result = Routes.getScene();
+        if (result.get(0).equals("true")) {
+            result.remove(0);
+
+            System.out.println(Locale.getSceneReportHeader());
+            for (var line: result) {
+                System.out.println(line);
+            }
+        } else {
+            System.out.println(Locale.getServerIsBusyError());
         }
         System.out.println();
     }

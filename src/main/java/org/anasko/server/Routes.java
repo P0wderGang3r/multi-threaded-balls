@@ -10,7 +10,14 @@ public class Routes {
     ////---GETTER-ы-----------------------------------------------------------------------------------------------------
 
     public static ArrayList<String> getScene() {
-        return Globals.getScene().getScene();
+        if (Globals.isWorkingStatus())
+            return new ArrayList<>(List.of("false"));
+
+        ArrayList<String> result = new ArrayList<>();
+        result.add("true");
+        result.addAll(Globals.getScene().getScene());
+
+        return result;
     }
 
     public static ArrayList<String> getWorkingStatus() {
@@ -21,7 +28,14 @@ public class Routes {
     }
 
     public static ArrayList<String> getResults() {
-        return Globals.getResults();
+        if (Globals.isWorkingStatus())
+            return new ArrayList<>(List.of("false"));
+
+        ArrayList<String> result = new ArrayList<>();
+        result.add("true");
+        result.addAll(Globals.getResults());
+
+        return result;
     }
 
     ////---SETTER-ы-----------------------------------------------------------------------------------------------------
