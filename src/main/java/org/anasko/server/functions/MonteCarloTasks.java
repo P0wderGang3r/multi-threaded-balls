@@ -5,10 +5,9 @@ import org.anasko.server.objects.Dot;
 import org.anasko.server.vars.Globals;
 
 import java.util.ArrayList;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.*;
 
-public class MonteCarloThreads implements Runnable {
+public class MonteCarloTasks implements Runnable {
     private final int threadCount;
 
     private double time = 0;
@@ -19,28 +18,14 @@ public class MonteCarloThreads implements Runnable {
 
     private double square;
 
-    private double[] squaresCountByThread;
-
     private void generateReport() {
         ArrayList<String> result = new ArrayList<>();
-        result.add("Monte-Carlo with threads");
+        result.add("Monte-Carlo with tasks");
         result.add("" + threadCount);
         result.add("" + time);
         result.add("" + dotsInCircles);
         result.add("" + square);
         Globals.setResults(result);
-    }
-
-    Runnable postBarrierCalculations() {
-        return () -> {
-            for (int i : dotsCountByThread) {
-                dotsInCircles += i;
-            }
-
-            for (double d : squaresCountByThread) {
-                square += d;
-            }
-        };
     }
 
     private void checkIfDotInCircles(int threadIndex, int dotIndex) {
@@ -58,7 +43,7 @@ public class MonteCarloThreads implements Runnable {
     }
 
 
-    Runnable dotsWorker(int threadIndex, CyclicBarrier BARRIER) {
+    Callable<Double> dotsWorker(int threadIndex) {
         double maxCoordX = Globals.getScene().getMaxCoordX();
         double minCoordX = Globals.getScene().getMinCoordX();
         double maxCoordY = Globals.getScene().getMaxCoordY();
@@ -74,36 +59,40 @@ public class MonteCarloThreads implements Runnable {
                 dotIndex += threadCount;
             }
 
-            squaresCountByThread[threadIndex] =
-                    ((maxCoordX - minCoordX + 2 * maxRadius) + minCoordX - maxRadius) *
+            return ((maxCoordX - minCoordX + 2 * maxRadius) + minCoordX - maxRadius) *
                     ((maxCoordY - minCoordY + 2 * maxRadius) + minCoordY - maxRadius) *
-                     dotsCountByThread[threadIndex] / dotsCount;
-
-            try {
-                BARRIER.await();
-            } catch (InterruptedException | BrokenBarrierException e) {
-                throw new RuntimeException(e);
-            }
+                    dotsCountByThread[threadIndex] / dotsCount;
         };
     }
 
     @Override
     public void run() {
         long startTime = System.currentTimeMillis();
+        double[] squaresCountByThread = new double[threadCount];
 
         dotsCountByThread = new int[threadCount];
-        squaresCountByThread = new double[threadCount];
 
-        CyclicBarrier BARRIER = new CyclicBarrier(threadCount + 1, postBarrierCalculations());
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        ArrayList<Future<Double>> futureTasks = new ArrayList<>();
 
         for (int threadIndex = 0; threadIndex < threadCount; threadIndex++) {
-            new Thread(dotsWorker(threadIndex, BARRIER)).start();
+            futureTasks.add(executorService.submit(dotsWorker(threadIndex)));
         }
 
-        try {
-            BARRIER.await();
-        } catch (InterruptedException | BrokenBarrierException e) {
-            throw new RuntimeException(e);
+        for (int index = 0; index < threadCount; index++) {
+            try {
+                squaresCountByThread[index] = futureTasks.get(index).get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        for (int i : dotsCountByThread) {
+            dotsInCircles += i;
+        }
+
+        for (double d : squaresCountByThread) {
+            square += d;
         }
 
         time = System.currentTimeMillis() - startTime;
@@ -112,7 +101,7 @@ public class MonteCarloThreads implements Runnable {
         Globals.setWorkingStatus(false);
     }
 
-    public MonteCarloThreads(int threadCount) {
+    public MonteCarloTasks(int threadCount) {
         this.threadCount = threadCount;
     }
 }

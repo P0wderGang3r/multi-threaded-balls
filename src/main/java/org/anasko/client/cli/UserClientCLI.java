@@ -39,11 +39,17 @@ public class UserClientCLI implements IUserClient {
         ArrayList<String> result = Routes.getResults();
         if (result.get(0).equals("true")) {
             System.out.println(Locale.getProgressReportHeader());
-            System.out.println(Locale.getLine1Threads() + result.get(1));
-            System.out.println(Locale.getLine2Time() + result.get(2) + Locale.getLine2Time2());
-            System.out.println(Locale.getLine3Dots() + result.get(3));
-            System.out.println(Locale.getLine4Square() + result.get(4) + Locale.getLine4Square2());
-        } else {
+            System.out.println(Locale.getLine1Name() + result.get(1));
+            System.out.println(Locale.getLine2Threads() + result.get(2));
+            System.out.println(Locale.getLine3Time() + result.get(3) + Locale.getLine3Time2());
+            System.out.println(Locale.getLine4Dots() + result.get(4));
+            System.out.println(Locale.getLine5Square() + result.get(5) + Locale.getLine5Square2());
+        } else
+        if (result.get(0).equals("empty")) {
+            System.out.println(Locale.getAlgorithmDoneNothing());
+        }
+        else
+        {
             System.out.println(Locale.getServerIsBusyError());
         }
         System.out.println();
@@ -52,6 +58,23 @@ public class UserClientCLI implements IUserClient {
 
     //Многопоточный алгоритм Монте-Карло
     private void route5() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        System.out.print(Locale.getGenThreads());
+        input = scanner.nextLine();
+        if (parseIntCheck(input)) return;
+        int threadCount = Integer.parseInt(input);
+
+        ArrayList<String> result = Routes.startMCTasks(threadCount);
+
+        if (result.get(0).equals("true")) {
+            System.out.println(Locale.getAlgorithmIsStarted());
+        }
+        else {
+            System.out.println(Locale.getAlgorithmIsNotStarted());
+        }
+        System.out.println();
     }
 
     //Многопоточный алгоритм Монте-Карло с использованием Java Threads
@@ -73,7 +96,6 @@ public class UserClientCLI implements IUserClient {
             System.out.println(Locale.getAlgorithmIsNotStarted());
         }
         System.out.println();
-        route9();
     }
 
     //Получение содержимого новой сцены

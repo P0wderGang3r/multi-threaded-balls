@@ -10,7 +10,7 @@ public class Locale {
             2 : Generate new set of dots
             3 : View generated scene
             4 : Use multi-threaded Monte-Carlo algorithm with Java threads
-            5 : Use ... algorithm
+            5 : Use multi-threaded Monte-Carlo algorithm with Java tasks
             6 : View algorithm results
             9 : Get current server status
             Your choice:\s""";
@@ -45,25 +45,31 @@ public class Locale {
     @Getter
     private final static String algorithmIsNotStarted = "Algorithm is not started.";
 
+    @Getter
+    private final static String algorithmDoneNothing = "Algorithm was not started yet.";
+
     //----REPORT LINES--------------------------------------------------------------------------------------------------
 
     @Getter
-    private final static String line1Threads = "Number of threads used: ";
+    private final static String line1Name = "Last algorithm used: ";
 
     @Getter
-    private final static String line2Time = "Estimated time: ";
+    private final static String line2Threads = "Number of threads used: ";
 
     @Getter
-    private final static String line2Time2 = " millis";
+    private final static String line3Time = "Estimated time: ";
 
     @Getter
-    private final static String line3Dots = "Counted number of dots in circles: ";
+    private final static String line3Time2 = " millis";
 
     @Getter
-    private final static String line4Square = "Estimated square: ";
+    private final static String line4Dots = "Counted number of dots in circles: ";
 
     @Getter
-    private final static String line4Square2 = " units^2";
+    private final static String line5Square = "Estimated square: ";
+
+    @Getter
+    private final static String line5Square2 = " units^2";
 
 
     //----ERRORS--------------------------------------------------------------------------------------------------------

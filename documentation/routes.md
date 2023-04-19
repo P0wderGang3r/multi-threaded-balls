@@ -3,16 +3,16 @@
 ## GET-теры
 
 ### getScene
-* Получить характеристику кругов на сцене
+* Получить данные о кругах на сцене
 
 #### Входные данные
 * Отсутствуют
 
 #### Выходные данные
 * ArrayList<String> : круги, расположенные в сцене
-* * CoordX CoordY CoordZ Radius
+* * CoordX CoordY Radius
 
-### getCurrentStatus
+### getWorkingStatus
 * Получить текущий статус занятости сервера
 
 #### Входные данные
@@ -34,6 +34,8 @@
 * * ArrayList<String>[0] = true : сервер занят
 * * ArrayList<String>[0] = false : сервер свободен
 * * ArrayList<String>[1] : время выполнения
+* * ...или...
+* * ArrayList<String>[0] = empty : алгоритмы ни разу не были выполнены
 
 ## SET-теры
 
