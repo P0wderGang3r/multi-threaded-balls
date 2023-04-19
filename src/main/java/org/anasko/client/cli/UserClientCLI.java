@@ -33,39 +33,51 @@ public class UserClientCLI implements IUserClient {
         System.out.println();
     }
 
+
     //Получить результаты работы алгоритма
     private void route6() {
         ArrayList<String> result = Routes.getResults();
         if (result.get(0).equals("true")) {
-            result.remove(0);
-
             System.out.println(Locale.getProgressReportHeader());
-            for (var line: result) {
-                System.out.println(line);
-            }
+            System.out.println(Locale.getLine1Threads() + result.get(1));
+            System.out.println(Locale.getLine2Time() + result.get(2) + Locale.getLine2Time2());
+            System.out.println(Locale.getLine3Dots() + result.get(3));
+            System.out.println(Locale.getLine4Square() + result.get(4) + Locale.getLine4Square2());
         } else {
             System.out.println(Locale.getServerIsBusyError());
         }
         System.out.println();
+
     }
 
     //Многопоточный алгоритм Монте-Карло
     private void route5() {
-
     }
 
-    //Многопоточный алгоритм Монте-Карло
+    //Многопоточный алгоритм Монте-Карло с использованием Java Threads
     private void route4() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
 
-    }
+        System.out.print(Locale.getGenThreads());
+        input = scanner.nextLine();
+        if (parseIntCheck(input)) return;
+        int threadCount = Integer.parseInt(input);
 
-    //Однопоточный алгоритм Монте-Карло
-    private void route3() {
+        ArrayList<String> result = Routes.startMCThreads(threadCount);
 
+        if (result.get(0).equals("true")) {
+            System.out.println(Locale.getAlgorithmIsStarted());
+        }
+        else {
+            System.out.println(Locale.getAlgorithmIsNotStarted());
+        }
+        System.out.println();
+        route9();
     }
 
     //Получение содержимого новой сцены
-    private void route2() {
+    private void route3() {
         ArrayList<String> result = Routes.getScene();
         if (result.get(0).equals("true")) {
             result.remove(0);
@@ -80,7 +92,24 @@ public class UserClientCLI implements IUserClient {
         System.out.println();
     }
 
-    //Создание новой сцены
+    //Создание нового набора точек
+    private void route2() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        System.out.print(Locale.getGenSceneDots());
+        input = scanner.nextLine();
+        if (parseIntCheck(input)) return;
+        int numOfDots = Integer.parseInt(input);
+
+        ArrayList<String> result = Routes.refreshDots(numOfDots);
+        if (result.get(0).equals("false")) {
+            System.out.println(Locale.getServerIsBusyError());
+        }
+        System.out.println();
+    }
+
+    //Создание нового набора окружностей
     private void route1() {
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -90,12 +119,7 @@ public class UserClientCLI implements IUserClient {
         if (parseIntCheck(input)) return;
         int numOfCircles = Integer.parseInt(input);
 
-        System.out.print(Locale.getGenSceneDots());
-        input = scanner.nextLine();
-        if (parseIntCheck(input)) return;
-        int numOfDots = Integer.parseInt(input);
-
-        ArrayList<String> result = Routes.refreshScene(numOfCircles, numOfDots);
+        ArrayList<String> result = Routes.refreshCircles(numOfCircles);
         if (result.get(0).equals("false")) {
             System.out.println(Locale.getServerIsBusyError());
         }
@@ -110,25 +134,26 @@ public class UserClientCLI implements IUserClient {
         while(!input.equals("0")) {
             System.out.print(Locale.getHelpMessage());
             input = scanner.nextLine();
+            System.out.println();
 
             if (parseIntCheck(input)) continue;
 
-            //Создание новой сцены
+            //Создание нового набора окружностей
             if (Integer.parseInt(input) == 1) {
                 route1();
             }
 
-            //Получение содержимого новой сцены
+            //Создание нового набора точек
             if (Integer.parseInt(input) == 2) {
                 route2();
             }
 
-            //Однопоточный алгоритм Монте-Карло
+            //Получение содержимого новой сцены
             if (Integer.parseInt(input) == 3) {
                 route3();
             }
 
-            //Многопоточный алгоритм Монте-Карло
+            //Многопоточный алгоритм Монте-Карло с использованием Java Threads
             if (Integer.parseInt(input) == 4) {
                 route4();
             }

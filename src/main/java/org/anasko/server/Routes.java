@@ -1,5 +1,6 @@
 package org.anasko.server;
 
+import org.anasko.server.functions.MonteCarloThreads;
 import org.anasko.server.vars.Globals;
 
 import java.util.ArrayList;
@@ -40,22 +41,32 @@ public class Routes {
 
     ////---SETTER-ы-----------------------------------------------------------------------------------------------------
 
-    public static ArrayList<String> refreshScene(int numOfCircles, int numOfDots) {
+    public static ArrayList<String> refreshCircles(int numOfCircles) {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));
 
         Globals.setWorkingStatus(true);
-        Globals.getScene().refreshScene(numOfCircles, numOfDots);
+        Globals.getScene().refreshCircles(numOfCircles);
 
         return new ArrayList<>(List.of("true"));
     }
 
-    public static ArrayList<String> startLinearMC() {
+    public static ArrayList<String> refreshDots(int numOfDots) {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));
 
         Globals.setWorkingStatus(true);
-        //SOMETHING THERE SHOULD START WORKING RN
+        Globals.getScene().refreshDots(numOfDots);
+
+        return new ArrayList<>(List.of("true"));
+    }
+
+    public static ArrayList<String> startMCThreads(int threadCount) {
+        if (Globals.isWorkingStatus())
+            return new ArrayList<>(List.of("false"));
+
+        Globals.setWorkingStatus(true);
+        new Thread(new MonteCarloThreads(threadCount)).start();
 
         return new ArrayList<>(List.of("true"));
     }

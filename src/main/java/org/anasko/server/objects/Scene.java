@@ -1,7 +1,6 @@
 package org.anasko.server.objects;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.anasko.server.vars.Globals;
 
 import java.util.ArrayList;
@@ -20,23 +19,22 @@ public class Scene {
     private final double minRadius = 1;
 
     @Getter
-    private final double maxCoordX = 10;
+    private final double maxCoordX = 100;
 
     @Getter
-    private final double minCoordX = -10;
+    private final double minCoordX = -100;
 
     @Getter
-    private final double maxCoordY = 10;
+    private final double maxCoordY = 100;
 
     @Getter
-    private final double minCoordY = -10;
+    private final double minCoordY = -100;
     
     private int numOfCircles = 0;
     private int numOfDots = 0;
     
-    private final Runnable refreshSceneWorker = () -> {
+    private final Runnable refreshCirclesWorker = () -> {
         circles.clear();
-        dots.clear();
 
         for (int index = 0; index < numOfCircles; index++) {
             circles.add(new Circle(
@@ -46,6 +44,14 @@ public class Scene {
             ));
         }
 
+        numOfCircles = 0;
+
+        Globals.setWorkingStatus(false);
+    };
+
+    private final Runnable refreshDotsWorker = () -> {
+        dots.clear();
+
         for (int index = 0; index < numOfDots; index++) {
             dots.add(new Dot(
                     Math.random() * (maxCoordX - minCoordX + 2 * maxRadius) + minCoordX - maxRadius,
@@ -53,17 +59,21 @@ public class Scene {
             ));
         }
 
-        numOfCircles = 0;
         numOfDots = 0;
 
         Globals.setWorkingStatus(false);
     };
     
-    public void refreshScene(int numOfCircles, int numOfDots) {
+    public void refreshCircles(int numOfCircles) {
         this.numOfCircles = numOfCircles;
-        this.numOfDots = numOfDots;
         
-        new Thread(refreshSceneWorker).start();
+        new Thread(refreshCirclesWorker).start();
+    }
+
+    public void refreshDots(int numOfDots) {
+        this.numOfDots = numOfDots;
+
+        new Thread(refreshDotsWorker).start();
     }
 
     public ArrayList<String> getScene() {

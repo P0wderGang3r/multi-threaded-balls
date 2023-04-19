@@ -25,8 +25,10 @@
 * Сцена
 
 ### Функции
-* refreshScene(int) : void : точка входа для генерации новой сцены
-* refreshSceneWorker : Runnable : процесс генерации новой сцены
+* refreshCircles(int) : void : точка входа для генерации нового набора окружностей
+* refreshCirclesWorker : Runnable : процесс генерации нового набора окружностей
+* refreshDots(int) : void : точка входа для генерации нового набора точек
+* refreshDotsWorker : Runnable : процесс генерации нового набора точек
 * getScene : ArrayList<String> : получение всех характеристик кругов в виде списка строк
 
 ### Переменные и константы

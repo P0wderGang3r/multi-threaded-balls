@@ -6,14 +6,16 @@ public class Locale {
     @Getter
     private final static String helpMessage = """
             0 : exit the program
-            1 : Generate new scene
-            2 : View generated scene
-            3 : Use linear Monte-Carlo algorithm
-            4 : Use ... algorithm
+            1 : Generate new set of cirles
+            2 : Generate new set of dots
+            3 : View generated scene
+            4 : Use multi-threaded Monte-Carlo algorithm with Java threads
             5 : Use ... algorithm
             6 : View algorithm results
             9 : Get current server status
             Your choice:\s""";
+
+    //----QUESTIONS-----------------------------------------------------------------------------------------------------
 
     @Getter
     private final static String genSceneCircles = "Enter a number of circles: ";
@@ -22,17 +24,49 @@ public class Locale {
     private final static String genSceneDots = "Enter a number of dots: ";
 
     @Getter
-    private final static String sceneReportHeader = "Scene generation report:";
+    private final static String genThreads = "Enter a number of threads: ";
+
+    //----REPORTS-------------------------------------------------------------------------------------------------------
+    @Getter
+    private final static String sceneReportHeader = "Scene generation report: ";
 
     @Getter
-    private final static String progressReportHeader = "Progress report:";
+    private final static String progressReportHeader = "Progress report: ";
+
+    @Getter
+    private final static String serverIsReady = "Server is ready to go!";
 
     @Getter
     private final static String serverIsBusy = "Server is busy.";
 
     @Getter
-    private final static String serverIsReady = "Server is ready to go!";
+    private final static String algorithmIsStarted = "Algorithm is successfully started.";
 
+    @Getter
+    private final static String algorithmIsNotStarted = "Algorithm is not started.";
+
+    //----REPORT LINES--------------------------------------------------------------------------------------------------
+
+    @Getter
+    private final static String line1Threads = "Number of threads used: ";
+
+    @Getter
+    private final static String line2Time = "Estimated time: ";
+
+    @Getter
+    private final static String line2Time2 = " millis";
+
+    @Getter
+    private final static String line3Dots = "Counted number of dots in circles: ";
+
+    @Getter
+    private final static String line4Square = "Estimated square: ";
+
+    @Getter
+    private final static String line4Square2 = " units^2";
+
+
+    //----ERRORS--------------------------------------------------------------------------------------------------------
     @Getter
     private final static String defaultInputError = "There are typo in an input string.";
 
