@@ -32,7 +32,10 @@ public class Scene {
     
     private int numOfCircles = 0;
     private int numOfDots = 0;
-    
+
+    /**
+     * Функция, генерирующая окружность со случайным центром и случайным радиусом
+     */
     private final Runnable refreshCirclesWorker = () -> {
         circles.clear();
 
@@ -49,6 +52,18 @@ public class Scene {
         Globals.setWorkingStatus(false);
     };
 
+    /**
+     * Точка входа в генератор окружности
+     */
+    public void refreshCircles(int numOfCircles) {
+        this.numOfCircles = numOfCircles;
+        
+        new Thread(refreshCirclesWorker).start();
+    }
+
+    /**
+     * Функция, генерирующая точку со случайными координатами
+     */
     private final Runnable refreshDotsWorker = () -> {
         dots.clear();
 
@@ -63,13 +78,10 @@ public class Scene {
 
         Globals.setWorkingStatus(false);
     };
-    
-    public void refreshCircles(int numOfCircles) {
-        this.numOfCircles = numOfCircles;
-        
-        new Thread(refreshCirclesWorker).start();
-    }
 
+    /**
+     * Точка входа в генератор точки
+     */
     public void refreshDots(int numOfDots) {
         this.numOfDots = numOfDots;
 
@@ -79,7 +91,7 @@ public class Scene {
     public ArrayList<String> getScene() {
         ArrayList<String> result = new ArrayList<>();
         for (Circle circle: circles) {
-            result.add(circle.getCoordX() + " " + circle.getCoordY() + " " + circle.getRadius());
+            result.add(circle.coordX() + " " + circle.coordY() + " " + circle.radius());
         }
 
         return result;

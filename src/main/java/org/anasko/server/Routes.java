@@ -7,11 +7,18 @@ import org.anasko.server.vars.Globals;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Работают по общему принципу:
+ * <br>
+ * Сначала проверка занятости сервера, затем выполнения соответствующего действия
+ */
 public class Routes {
 
     ////---GETTER-ы-----------------------------------------------------------------------------------------------------
 
-    //Получить данные о кругах на сцене
+    /**
+     * Получить данные о кругах на сцене
+     */
     public static ArrayList<String> getScene() {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));
@@ -23,7 +30,9 @@ public class Routes {
         return result;
     }
 
-    //Получить текущий статус занятости сервера
+    /**
+     * Получить текущий статус занятости сервера
+     */
     public static ArrayList<String> getWorkingStatus() {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("true"));
@@ -31,7 +40,9 @@ public class Routes {
         return new ArrayList<>(List.of("false"));
     }
 
-    //Получить результаты выполнения алгоритма
+    /**
+     * Получить результаты выполнения алгоритма
+     */
     public static ArrayList<String> getResults() {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));
@@ -51,7 +62,9 @@ public class Routes {
 
     ////---SETTER-ы-----------------------------------------------------------------------------------------------------
 
-    //Повторно создать множество окружностей
+    /**
+     * Повторно создать множество окружностей
+     */
     public static ArrayList<String> refreshCircles(int numOfCircles) {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));
@@ -62,7 +75,9 @@ public class Routes {
         return new ArrayList<>(List.of("true"));
     }
 
-    //Повторно создать множество точек
+    /**
+     * Повторно создать множество точек
+     */
     public static ArrayList<String> refreshDots(int numOfDots) {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));
@@ -73,7 +88,9 @@ public class Routes {
         return new ArrayList<>(List.of("true"));
     }
 
-    //Многопоточный алгоритм Монте-Карло с использованием Threads
+    /**
+     * Многопоточный алгоритм Монте-Карло с использованием Threads
+     */
     public static ArrayList<String> startMCThreads(int threadCount) {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));
@@ -84,7 +101,9 @@ public class Routes {
         return new ArrayList<>(List.of("true"));
     }
 
-    //Многопоточный алгоритм Монте-Карло с использованием Tasks
+    /**
+     * Многопоточный алгоритм Монте-Карло с использованием Tasks
+     */
     public static ArrayList<String> startMCTasks(int threadCount) {
         if (Globals.isWorkingStatus())
             return new ArrayList<>(List.of("false"));

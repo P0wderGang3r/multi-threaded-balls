@@ -56,7 +56,7 @@ public class UserClientCLI implements IUserClient {
 
     }
 
-    //Многопоточный алгоритм Монте-Карло
+    //Многопоточный алгоритм Монте-Карло с использованием Java Tasks
     private void route5() {
         Scanner scanner = new Scanner(System.in);
         String input;
