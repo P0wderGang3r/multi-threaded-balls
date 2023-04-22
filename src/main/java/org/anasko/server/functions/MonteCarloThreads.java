@@ -92,9 +92,9 @@ public class MonteCarloThreads implements Runnable {
 
             //Вычисляем площадь полученной фигуры
             squaresCountByThread[threadIndex] =
-                    ((maxCoordX - minCoordX + 2 * maxRadius) + minCoordX - maxRadius) *
-                    ((maxCoordY - minCoordY + 2 * maxRadius) + minCoordY - maxRadius) *
-                     dotsCountByThread[threadIndex] / dotsCount;
+                    (maxCoordX - minCoordX + 2 * maxRadius) *
+                            (maxCoordY - minCoordY + 2 * maxRadius) *
+                            dotsCountByThread[threadIndex] / dotsCount;
 
             //Ожидаем, пока все потоки выполнят алгоритм
             try {

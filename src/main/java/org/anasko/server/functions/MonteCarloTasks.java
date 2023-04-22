@@ -74,9 +74,10 @@ public class MonteCarloTasks implements Runnable {
             }
 
             //Возвращаем площадь полученной фигуры
-            return ((maxCoordX - minCoordX + 2 * maxRadius) + minCoordX - maxRadius) *
-                    ((maxCoordY - minCoordY + 2 * maxRadius) + minCoordY - maxRadius) *
-                    dotsCountByThread[threadIndex] / dotsCount;
+            return
+                    (maxCoordX - minCoordX + 2 * maxRadius) *
+                            (maxCoordY - minCoordY + 2 * maxRadius) *
+                            dotsCountByThread[threadIndex] / dotsCount;
         };
     }
 
