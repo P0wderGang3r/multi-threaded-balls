@@ -13,6 +13,10 @@ public class Locale {
             5 : Use multi-threaded Monte-Carlo algorithm with Java tasks
             6 : View algorithm results
             9 : Get current server status
+            ? : show this message""";
+
+    @Getter
+    private final static String inputMessage = """
             Your choice:\s""";
 
     //----QUESTIONS-----------------------------------------------------------------------------------------------------

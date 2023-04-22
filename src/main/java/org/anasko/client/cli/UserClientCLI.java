@@ -152,11 +152,18 @@ public class UserClientCLI implements IUserClient {
     public void run() {
         Scanner scanner = new Scanner(System.in);
         String input = "1";
+        System.out.println(Locale.getHelpMessage());
 
         while(!input.equals("0")) {
-            System.out.print(Locale.getHelpMessage());
+            System.out.print(Locale.getInputMessage());
             input = scanner.nextLine();
             System.out.println();
+
+            if(input.equals("help") || input.equals("?")) {
+                System.out.println(Locale.getHelpMessage());
+                System.out.println();
+                continue;
+            }
 
             if (parseIntCheck(input)) continue;
 
